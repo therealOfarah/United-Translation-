@@ -17,19 +17,47 @@ export default function Contact() {
             </p>
 
             <div className="contact-grid">
-                <form className="contact-form">
+                <form
+                    name="contact"
+                    method="POST"
+                    data-netlify="true"
+                    className="contact-form"
+                >
+                    {/* Hidden field for Netlify */}
+                    <input type="hidden" name="form-name" value="contact" />
+
                     <h3 className="form-heading">Request a Consultation</h3>
                     <div className="form-group">
                         <label htmlFor="name" className="form-label">Full Name</label>
-                        <input id="name" type="text" placeholder="Your Name" className="form-input" />
+                        <input
+                            id="name"
+                            name="name"
+                            type="text"
+                            placeholder="Your Name"
+                            className="form-input"
+                            required
+                        />
                     </div>
                     <div className="form-group">
                         <label htmlFor="email" className="form-label">Email Address</label>
-                        <input id="email" type="email" placeholder="Your Email" className="form-input" />
+                        <input
+                            id="email"
+                            name="email"
+                            type="email"
+                            placeholder="Your Email"
+                            className="form-input"
+                            required
+                        />
                     </div>
                     <div className="form-group">
                         <label htmlFor="message" className="form-label">Project Details</label>
-                        <textarea id="message" placeholder="I need interpretation for..." className="form-textarea" />
+                        <textarea
+                            id="message"
+                            name="message"
+                            placeholder="I need interpretation for..."
+                            className="form-textarea"
+                            required
+                        />
                     </div>
                     <button type="submit" className="form-submit-button">
                         Submit Request

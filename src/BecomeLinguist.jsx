@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FaUpload, FaCheckCircle, FaGlobe, FaHeadset } from 'react-icons/fa';
 
-// IMPORTANT: This component relies on the CSS provided earlier for styling.
+// The "isSubmitted" logic below relies on Netlify redirecting the user 
+// to the homepage with a query parameter like "?submitted=true" after successful submission.
 
 export default function BecomeLinguist() {
     const [file, setFile] = useState(null);
@@ -13,26 +14,8 @@ export default function BecomeLinguist() {
         }
     };
 
-    // Netlify Forms Submission is handled by the browser's native submission. 
-    // We only need to manage the file state and ensure the form attributes are correct.
-    
-    // We will simulate the success page based on a query parameter Netlify often uses
-    // for successful submissions if a dedicated success page is not configured.
-    // However, the cleanest way is often a simple redirect to a static page after submission.
-
-    // For this example, we rely on Netlify's successful submission redirection.
-    // We will remove the custom submission logic (e.preventDefault() and setIsSubmitted).
-    // The successful submission message will be a dedicated page or handled by Netlify.
-    
-    // To show a success state *without* routing, we'll check for a simple flag 
-    // in the URL after a hypothetical redirect (e.g., /linguist?success=true).
-    // For now, we'll just focus on the form structure.
-    
-    // To properly simulate the success state in a real app, you would:
-    // 1. Set the form's action to a success URL: action="/linguist-success"
-    // 2. Create the LinguistSuccess component/page.
-
-    // Since we are only modifying the form component itself:
+    // Check for a submission success flag in the URL (e.g., /?submitted=true)
+    // This is a common way to handle success messages after a Netlify redirect.
     const isSubmitted = window.location.search.includes('submitted=true'); 
 
     if (isSubmitted) {
@@ -47,7 +30,7 @@ export default function BecomeLinguist() {
                 <FaCheckCircle style={{ color: '#1e3a8a', fontSize: '60px', marginBottom: '20px' }} />
                 <h2 className="contact-heading" style={{ color: '#1e3a8a' }}>Application Submitted Successfully!</h2>
                 <p className="contact-subheading">
-                    Thank you for your interest in joining the United Translations network. We will review your application and contact you shortly at **therealofarah@gmail.com**.
+                    Thank you for your interest in joining the United Translations network. We will review your application and contact you shortly.
                 </p>
             </motion.div>
         );
@@ -62,8 +45,6 @@ export default function BecomeLinguist() {
         >
             <header className="linguist-header-banner">
                 <div className="header-content">
-                    {/* The original CSS used .about-heading/subheading size on the About page. 
-                        Using generic/smaller classes here for better banner fit. */}
                     <h1 className="about-heading" style={{ color: 'white' }}>Join Our Network of Certified Linguists</h1>
                     <p className="about-subheading" style={{ color: '#bfdbfe' }}>
                         Partner with a trusted leader in global communication. We are always looking for talented interpreters and translators.
@@ -72,34 +53,38 @@ export default function BecomeLinguist() {
             </header>
 
             <div className="application-form-wrapper section-padding" style={{paddingTop: '40px', paddingBottom: '40px'}}>
-                {/* NETLIFY FORM INTEGRATION */}
+                {/* NETLIFY FORM INTEGRATION:
+                  1. name="LinguistApplication": Identifies the form in Netlify dashboard.
+                  2. data-netlify="true": Enables Netlify form handling.
+                  3. enctype="multipart/form-form-data": Required for file uploads.
+                  4. action="/": Fixes the 404 error by redirecting to the homepage upon success.
+                */}
                 <form 
                     name="LinguistApplication" 
                     method="POST" 
                     data-netlify="true" 
                     enctype="multipart/form-form-data" 
                     className="linguist-form"
-                    // Optional: Set a specific success page URL 
-                    // action="/linguist?submitted=true" 
+                    action="/" 
                 >
-                    {/* Required Netlify hidden input */}
+                    {/* Required Netlify hidden input for successful detection */}
                     <input type="hidden" name="form-name" value="LinguistApplication" />
                     
                     <h3 className="form-heading">Your Professional Application</h3>
                     
-                    {/* Basic Info */}
+                    {/* Full Name */}
                     <div className="form-group">
                         <label htmlFor="full-name" className="form-label">Full Name</label>
-                        {/* Using 'Full Name' as one field for simplicity, as per the original component */}
                         <input id="full-name" name="Full Name" type="text" placeholder="First and Last Name" className="form-input" required />
                     </div>
                     
+                    {/* Email Address */}
                     <div className="form-group">
                         <label htmlFor="email" className="form-label">Email Address</label>
                         <input id="email" name="Email" type="email" placeholder="Your Professional Email" className="form-input" required />
                     </div>
 
-                    {/* Language and Service */}
+                    {/* Language and Service Row */}
                     <div className="form-row">
                         <div className="form-group" style={{ flex: 1 }}>
                             <label htmlFor="language" className="form-label">Primary Language (Non-English)</label>
@@ -116,16 +101,16 @@ export default function BecomeLinguist() {
                         </div>
                     </div>
                     
-                    {/* File Upload (Requires special handling and a name attribute) */}
+                    {/* File Upload */}
                     <div className="form-group file-upload-group">
                         <label htmlFor="resume-upload" className="form-label">Upload Resume / CV (PDF preferred)</label>
                         <div className="file-input-container">
                             <input
                                 id="resume-upload"
-                                name="Resume" // IMPORTANT: This name is used by Netlify for the file field
+                                name="Resume" // This is the field Netlify uses for the file
                                 type="file"
                                 accept=".pdf, .doc, .docx"
-                                style={{ display: 'none' }} // Hide the default input
+                                style={{ display: 'none' }} 
                                 onChange={handleFileChange}
                             />
                             <label htmlFor="resume-upload" className="file-input-label" style={{ padding: '16px 20px', display: 'block', cursor: 'pointer', borderRadius: '8px' }}>
