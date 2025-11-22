@@ -1,9 +1,30 @@
 // src/Contact.jsx
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useForm, ValidationError } from '@formspree/react';
 import { FaMapMarkerAlt, FaPhone, FaEnvelope } from 'react-icons/fa';
 
 export default function Contact() {
+    // ONLY use your Formspree ID here (not the full URL)
+    const [state, handleSubmit] = useForm("mrbdyloq"); 
+
+    if (state.succeeded) {
+        return (
+            <motion.div
+                className="page-container-contact"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.8 }}
+                style={{ textAlign: 'center', padding: '80px 24px' }}
+            >
+                <h2 className="contact-heading">Thank You!</h2>
+                <p className="contact-subheading">
+                    Your request has been submitted. We will get back to you shortly.
+                </p>
+            </motion.div>
+        );
+    }
+
     return (
         <motion.div
             className="page-container-contact"
@@ -17,39 +38,35 @@ export default function Contact() {
             </p>
 
             <div className="contact-grid">
-                <form
-                    name="contact"
-                    method="POST"
-                    data-netlify="true"
-                    className="contact-form"
-                    action="/?submitted=true"
-                >
-                    {/* Hidden field for Netlify */}
-                    <input type="hidden" name="form-name" value="contact" />
-
+                <form className="contact-form" onSubmit={handleSubmit}>
                     <h3 className="form-heading">Request a Consultation</h3>
+
                     <div className="form-group">
                         <label htmlFor="name" className="form-label">Full Name</label>
                         <input
                             id="name"
-                            name="name"
                             type="text"
+                            name="name"
                             placeholder="Your Name"
                             className="form-input"
                             required
                         />
+                        <ValidationError prefix="Name" field="name" errors={state.errors} />
                     </div>
+
                     <div className="form-group">
                         <label htmlFor="email" className="form-label">Email Address</label>
                         <input
                             id="email"
-                            name="email"
                             type="email"
+                            name="email"
                             placeholder="Your Email"
                             className="form-input"
                             required
                         />
+                        <ValidationError prefix="Email" field="email" errors={state.errors} />
                     </div>
+
                     <div className="form-group">
                         <label htmlFor="message" className="form-label">Project Details</label>
                         <textarea
@@ -59,8 +76,10 @@ export default function Contact() {
                             className="form-textarea"
                             required
                         />
+                        <ValidationError prefix="Message" field="message" errors={state.errors} />
                     </div>
-                    <button type="submit" className="form-submit-button">
+
+                    <button type="submit" className="form-submit-button" disabled={state.submitting}>
                         Submit Request
                     </button>
                 </form>
@@ -92,7 +111,7 @@ export default function Contact() {
                         </p>
                     </div>
 
-                    <div className='info-hours'>
+                    <div className="info-hours">
                         <p className="info-label">Business Hours:</p>
                         <p>Monday – Friday, 9:00 AM – 6:00 PM EST</p>
                     </div>
