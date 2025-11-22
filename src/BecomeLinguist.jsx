@@ -16,7 +16,8 @@ export default function BecomeLinguist() {
 
     // Check for a submission success flag in the URL (e.g., /?submitted=true)
     // This is a common way to handle success messages after a Netlify redirect.
-    const isSubmitted = window.location.search.includes('submitted=true'); 
+    const isSubmitted = window.location.search.includes('submitted=true') || false;
+
 
     if (isSubmitted) {
         return (
@@ -53,22 +54,15 @@ export default function BecomeLinguist() {
             </header>
 
             <div className="application-form-wrapper section-padding" style={{paddingTop: '40px', paddingBottom: '40px'}}>
-                {/* NETLIFY FORM INTEGRATION:
-                  1. name="LinguistApplication": Identifies the form in Netlify dashboard.
-                  2. data-netlify="true": Enables Netlify form handling.
-                  3. enctype="multipart/form-form-data": Required for file uploads.
-                  4. action="/": Fixes the 404 error by redirecting to the homepage upon success.
-                */}
+                
                 <form 
-                    name="LinguistApplication" 
-                    method="POST" 
-                    data-netlify="true" 
-                    enctype="multipart/form-form-data" 
-                    className="linguist-form"
-                    action="/" 
-                >
-                    {/* Required Netlify hidden input for successful detection */}
-                    <input type="hidden" name="form-name" value="LinguistApplication" />
+                name="LinguistApplication" 
+                method="POST" 
+                data-netlify="true" 
+                enctype="multipart/form-data"
+                className="linguist-form"
+>
+            <input type="hidden" name="form-name" value="LinguistApplication" />
                     
                     <h3 className="form-heading">Your Professional Application</h3>
                     
