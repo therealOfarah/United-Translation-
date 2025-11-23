@@ -46,7 +46,7 @@ export default function About() {
                 <div className="about-header">
                     <h2 className="about-heading">Our Commitment</h2>
                     <p className="about-subheading">
-                        United Translations LLC was founded to provide reliable, culturally aware language solutions.
+                        United Translations Services LLC was founded to provide reliable, culturally aware language solutions.
                         We believe language should connect, not divide.
                     </p>
                 </div>

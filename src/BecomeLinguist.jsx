@@ -22,7 +22,7 @@ export default function BecomeLinguist() {
                     Application Submitted Successfully!
                 </h2>
                 <p className="contact-subheading">
-                    Thank you for your interest in joining the United Translations network. We will review your application and contact you shortly.
+                    Thank you for your interest in joining the United Translations Services network. We will review your application and contact you shortly.
                 </p>
             </motion.div>
         );

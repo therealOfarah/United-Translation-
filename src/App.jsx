@@ -83,7 +83,7 @@ function Navbar() {
                 <span className="logo-text">L</span>
             </div>
             <span className="logo-title">
-                UNITED <span className='logo-subtitle'>TRANSLATIONS</span>
+                UNITED <span className='logo-subtitle'>TRANSLATIONS SERVICES</span>
             </span>
         </Link>
         
@@ -124,7 +124,7 @@ function Footer() {
   return (
     <footer className="main-footer">
       <div className="footer-content">
-        <p className="footer-title">United Translations LLC</p>
+        <p className="footer-title">United Translations Services Services LLC</p>
         <p className="footer-copy">© {new Date().getFullYear()} All rights reserved. | Your partner in global communication excellence.</p>
         <div className="footer-links-container">
           <Link to="/" className="footer-link">Home</Link>
@@ -223,7 +223,7 @@ function Home() {
         <div className="cta-banner-content">
           <h2 className="cta-banner-heading">Trusted by Leading Organizations Globally</h2>
           <p className="cta-banner-text">
-            Partner with United Translations for reliable, high-quality language solutions tailored to your industry.
+            Partner with United Translations Services for reliable, high-quality language solutions tailored to your industry.
           </p>
           <Link
             to="/contact"
@@ -235,8 +235,8 @@ function Home() {
       </section>
 
       {/* Testimonials remain */}
-      <section className="section-padding testimonials-section">
-        <h2 className="section-heading">What Our Clients Say</h2>
+      {/* <section className="section-padding testimonials-section"> */}
+        {/* <h2 className="section-heading">What Our Clients Say</h2> */}
         <motion.div 
           className="testimonials-grid"
           variants={containerVariants}
@@ -246,7 +246,7 @@ function Home() {
         >
             {/* Testimonial map... */}
         </motion.div>
-      </section>
+      {/* </section> */}
       
     </motion.div>
   )

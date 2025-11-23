@@ -99,7 +99,7 @@ export default function Contact() {
                         <FaPhone className="info-icon" />
                         <p className="info-text">
                             <span className="info-label">Phone Support</span>
-                            (207) 555-1234
+                            (207)-376-7011
                         </p>
                     </div>
 
@@ -107,7 +107,7 @@ export default function Contact() {
                         <FaEnvelope className="info-icon" />
                         <p className="info-text">
                             <span className="info-label">Email</span>
-                            contact@unitedtranslations.com
+                            contact@unitedtranslationsservices.com
                         </p>
                     </div>
 
