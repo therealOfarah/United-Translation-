@@ -66,11 +66,11 @@ function Navbar() {
       {/* Top Utility Bar */}
       <div className="utility-bar">
         <div className="utility-content">
-          <FaSearch className="search-icon" />
-          <span>207-376-7011</span>
+          {/* <FaSearch className="search-icon" /> */}
+          {/* <span>207-376-7011</span> */}
           <Link to="/support" className="utility-link">Get Support</Link>
           <Link to="/become-linguist" className="utility-link">Become a Contract Linguist</Link>
-          <a href="#" className="utility-link">Login</a>
+          {/* <a href="#" className="utility-link">Login</a> */}
         </div>
       </div>
       
