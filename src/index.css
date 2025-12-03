@@ -1280,7 +1280,153 @@ a {
     color: var(--color-primary-dark);
     border-bottom-color: var(--color-primary-dark);
 }
+/* --- Add this outside of any media query for desktop hiding --- */
+.mobile-menu-toggle {
+    display: none; /* Hide by default */
+    background: none;
+    border: none;
+    font-size: 1.5em;
+    cursor: pointer;
+    color: var(--color-primary-dark);
+    z-index: 1001; /* Must be high to be clickable */
+}
 
+/* --- Add this inside your @media (max-width: 767px) block --- */
+@media (max-width: 767px) {
+    /* ... existing mobile styles ... */
+    
+    /* Make the toggle button visible on mobile */
+    .mobile-menu-toggle {
+        display: block; 
+    }
+    
+    /* ... rest of mobile styles ... */
+}
+@media (max-width: 767px) {
+    /* --- Global Mobile Resets --- */
+    .section-padding {
+        padding: 40px 24px; /* Reduced vertical padding */
+    }
+    .section-heading {
+        font-size: 32px; /* Reduced font size for mobile */
+        margin-bottom: 32px;
+    }
+
+    /* --- Navigation Mobile Overrides --- */
+    /* Hide desktop nav links and ensure they stack if forced visible by JS */
+   .nav-links-container {
+        /* This creates the off-screen sidebar */
+        position: fixed; /* Use fixed to cover the whole viewport */
+        width: 80%; /* Takes up 80% of the screen */
+        height: 100vh;
+        top: 0; 
+        right: 0;
+        background-color: white;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 80px 24px 24px; /* Padding to clear the top logo area */
+        box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+
+        /* Initial state: Hidden off-screen */
+        transform: translateX(100%);
+        transition: transform 0.4s ease-out;
+        
+        /* Must be visible but off-screen */
+        display: flex; 
+        overflow-y: auto; 
+    }
+
+    /* State when menu is open (controlled by React state) */
+    .nav-links-container.open {
+        transform: translateX(0);
+    }
+    
+    /* Dropdown Accordion Behavior */
+    .dropdown-container {
+        width: 100%;
+        /* Ensure dropdowns fit full width */
+    }
+
+    /* Override Desktop Dropdown Menu Logic for Mobile Accordion */
+    .dropdown-menu {
+        position: static; 
+        box-shadow: none;
+        border: none;
+        width: 100%;
+        padding: 0;
+        
+        /* Use max-height for accordion animation */
+        max-height: 0;
+        opacity: 1; 
+        visibility: visible;
+        overflow: hidden;
+        transition: max-height 0.4s ease-in-out;
+    }
+
+    .dropdown-menu.open {
+        max-height: 500px; /* Needs to be large enough to contain all items */
+    }
+
+    .dropdown-icon.rotate {
+        transform: rotate(180deg);
+    }
+
+    /* Indent mobile dropdown items */
+    .dropdown-item {
+        padding-left: 40px; 
+        background-color: var(--color-bg-light); 
+    }
+    
+    .cta-button {
+        margin-top: 20px;
+        width: 100%;
+        text-align: center;
+    }
+    /* --- Hero Section Mobile Overrides --- */
+    .hero-content {
+        padding: 24px;
+        text-align: center;
+        margin: 0 auto;
+    }
+    .hero-heading {
+        font-size: 44px; /* Significantly reduced heading size */
+    }
+    .hero-cta-group {
+        flex-direction: column; /* Stack buttons vertically */
+        gap: 12px;
+    }
+    .cta-button-primary, .cta-button-secondary {
+        width: 100%; /* Full width buttons */
+    }
+    
+    /* --- Grids Stacking (Most grids default to 1fr, ensure no overrides prevent stacking) --- */
+    .services-grid,
+    .testimonials-grid,
+    .values-grid,
+    .team-grid,
+    .contact-grid,
+    .details-grid,
+    .resources-grid,
+    .industries-grid,
+    .support-contact-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* --- Page Specific Resets --- */
+    .page-container-about,
+    .page-container-contact,
+    .linguist-header-banner,
+    .page-header-resources,
+    .page-header-industries {
+        padding: 40px 24px;
+    }
+
+    /* Ensure form rows stack */
+    .form-row {
+        flex-direction: column;
+    }
+}
 /* --- Media Query for Industries Grid --- */
 @media (min-width: 768px) {
     .industries-grid {
