@@ -31,8 +31,8 @@ export default function About() {
 
     const team = [
         { name: 'Omar Farah', role: 'Founder & CEO', bio: 'Entrepreneur and interpreter dedicated to global communication.' },
-        { name: 'Amina Hassan', role: 'Operations Director', bio: 'Manages interpreter training and quality assurance.' },
-        { name: 'James Liu', role: 'Technical Lead', bio: 'Oversees digital systems and multilingual technology platforms.' },
+        { name: 'Ahmed Farah', role: 'Operations Director', bio: 'Manages interpreter training and quality assurance.' },
+        // { name: 'James Liu', role: 'Technical Lead', bio: 'Oversees digital systems and multilingual technology platforms.' },
     ];
 
     return (

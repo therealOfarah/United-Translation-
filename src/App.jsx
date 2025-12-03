@@ -4,7 +4,17 @@ import { motion } from 'framer-motion';
 // Icons needed across the application
 import { FaHeadset, FaFileAlt, FaGlobe, FaCertificate, FaChevronDown, FaBars, FaTimes } from 'react-icons/fa'; 
 // Removed unused icons for cleaner output
-
+import LanguageServices from './LanguageServices';
+import Interpretation from './Interpretation';     
+import Translation from './Translation';           
+import Localization from './Localization';         
+import About from './About';      // <-- Must be imported now
+import Contact from './Contact';    // <-- Must be imported now
+import BecomeLinguist from './BecomeLinguist';
+import Industries from './Industries';
+import Resources from './Resources';
+import GetSupport from './GetSupport';
+// --- Framer Motion Variants (Defined locally) ---
 // --- Framer Motion Variants (Defined locally) ---
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -22,34 +32,10 @@ const itemVariants = {
   visible: { y: 0, opacity: 1 }
 };
 
-// --- PLACEHOLDER COMPONENTS ---
-// This ensures that all components required by the Routes exist.
-const PlaceholderPage = ({ title }) => (
-    <motion.div 
-      className="page-container" 
-      initial={{ opacity: 0 }} 
-      animate={{ opacity: 1 }} 
-      style={{ minHeight: '80vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-    >
-        <h1 style={{ fontSize: '2em', color: '#1e3a8a' }}>{title}</h1>
-    </motion.div>
-);
 
-const LanguageServices = () => <PlaceholderPage title="Language Services Hub" />;
-const Interpretation = () => <PlaceholderPage title="Interpretation Services" />;
-const Translation = () => <PlaceholderPage title="Translation Services" />;
-const Localization = () => <PlaceholderPage title="Localization Services" />;
-const About = () => <PlaceholderPage title="Why Choose UT" />;
-const Contact = () => <PlaceholderPage title="Contact Us / Request a Quote" />;
-const BecomeLinguist = () => <PlaceholderPage title="Become a Contract Linguist" />;
-const Industries = () => <PlaceholderPage title="Industries Served" />;
-const Resources = () => <PlaceholderPage title="Resources Center" />;
-const GetSupport = () => <PlaceholderPage title="Get Technical Support" />;
-
-
-/* -------------------- Navbar Components -------------------- */
-
-const NavLinkWithDropdown = ({ title, children, link }) => {
+/* -------------------- NavLinkWithDropdown (MODIFIED) -------------------- */
+// Now accepts 'onLinkClick' and injects it into children
+const NavLinkWithDropdown = ({ title, children, link, onLinkClick }) => {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
     const toggleDropdown = (e) => {
@@ -60,23 +46,58 @@ const NavLinkWithDropdown = ({ title, children, link }) => {
         }
     };
 
+    const handleParentLinkClick = (e) => {
+        toggleDropdown(e); 
+        
+        // Call the global handler only if it's a desktop click (link navigation)
+        if (window.innerWidth >= 768) {
+            if (link && link !== '#' && onLinkClick) {
+                onLinkClick();
+            }
+        }
+    }
+
+    // Function to clone and add the handler to dropdown items (children)
+    const childrenWithProps = React.Children.map(children, child => {
+        if (React.isValidElement(child)) {
+            return React.cloneElement(child, {
+                // Combine existing onClick with the global handler
+                onClick: (e) => {
+                    if (child.props.onClick) {
+                        child.props.onClick(e);
+                    }
+                    // Call the global handler to close menu and scroll to top
+                    if (onLinkClick) {
+                        onLinkClick();
+                    }
+                }
+            });
+        }
+        return child;
+    });
+
     return (
         <div className="dropdown-container">
             <Link 
                 to={link || '#'} 
                 className="dropdown-btn"
-                onClick={toggleDropdown}
+                onClick={handleParentLinkClick} // Use custom handler
                 aria-expanded={isDropdownOpen}
             >
                 {title} <FaChevronDown className={`dropdown-icon ${isDropdownOpen ? 'rotate' : ''}`} />
             </Link>
             {/* Conditional class based on state (for mobile accordion) */}
             <div className={`dropdown-menu ${isDropdownOpen ? 'open' : ''}`}>
-                {children}
+                {/* Render children with injected onClick handler */}
+                {childrenWithProps}
             </div>
         </div>
     );
 };
+
+
+/* -------------------- Navbar (MODIFIED) -------------------- */
+// All links now use the handleNavClick handler via the onClick prop.
 
 function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -84,29 +105,40 @@ function Navbar() {
   const toggleMenu = () => {
     setIsMenuOpen(prev => !prev);
   };
-
+  
+  // Universal Handler for Nav Links: Closes menu AND scrolls to top
+  const handleNavClick = () => {
+    if (isMenuOpen) {
+          setIsMenuOpen(false);
+      }
+      window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+      });
+  };
+      
   const navClass = `nav-links-container ${isMenuOpen ? 'open' : ''}`;
 
   return (
     <nav className="main-nav-wrapper">
-      {/* Top Utility Bar */}
+      {/* Top Utility Bar - Handlers added */}
       <div className="utility-bar">
         <div className="utility-content">
-          <Link to="/support" className="utility-link">Get Support</Link>
-          <Link to="/become-linguist" className="utility-link">Become a Contract Linguist</Link>
+          <Link to="/support" className="utility-link" onClick={handleNavClick}>Get Support</Link>
+          <Link to="/become-linguist" className="utility-link" onClick={handleNavClick}>Become a Contract Linguist</Link>
         </div>
       </div>
       
       {/* Main Navigation Bar */}
       <div className="main-nav-content">
         
-        {/* Logo Area */}
-        <Link to="/" className="logo-link">
-            <div className="logo-square">
-                <span className="logo-text">L</span>
-            </div>
+        {/* Logo Area - Handler added */}
+        <Link to="/" className="logo-link" onClick={handleNavClick}>
+            {/* <div className="logo-square">
+                <span className="logo-text-white"> UTS</span>
+            </div> */}
             <span className="logo-title">
-                UNITED <span className='logo-subtitle'>TRANSLATIONS SERVICES</span>
+                UNITED TRANSLATIONS SERVICES <span className='logo-subtitle'></span>
             </span>
         </Link>
         
@@ -123,25 +155,39 @@ function Navbar() {
         {/* 2. Navigation Links Container (Toggled by state) */}
         <div className={navClass} id="mobile-menu">
             
-            <NavLinkWithDropdown title="Language Services" link="/services">
+            {/* onLinkClick passed to dropdowns */}
+            <NavLinkWithDropdown 
+                title="Language Services" 
+                link="/services" 
+                onLinkClick={handleNavClick}
+            >
+                {/* Child links will now receive the handler via cloneElement */}
                 <Link to="/interpretation" className="dropdown-item">Interpretation</Link>
                 <Link to="/translation" className="dropdown-item">Translation</Link>
                 <Link to="/localization" className="dropdown-item">Localization</Link>
             </NavLinkWithDropdown>
             
-            <NavLinkWithDropdown title="Industries" link="/industries">
+            <NavLinkWithDropdown 
+                title="Industries" 
+                link="/industries" 
+                onLinkClick={handleNavClick}
+            >
                 <Link to="/industries" className="dropdown-item">Healthcare</Link>
                 <Link to="/industries" className="dropdown-item">Legal</Link>
-                <Link to="/industries" className="dropdown-item">Corporate</Link>
+                <Link to="/industries" className="dropdown-item" >Corporate</Link>
             </NavLinkWithDropdown>
 
-            <Link to="/about" className="nav-link">Why Choose UT</Link>
-            <Link to="/resources" className="nav-link">Resources</Link>
-
-            {/* Request a Quote CTA */}
+            {/* Handlers added to standard nav links */}
+            <Link to="/about" className="nav-link" onClick={handleNavClick}>Why Choose UTS</Link>
+            <Link to="/resources" className="nav-link" onClick={handleNavClick}>Resources</Link>
+            <Link to="/support" className="utility-link" onClick={handleNavClick}>Get Support</Link>
+            <Link to="/become-linguist" className="utility-link" onClick={handleNavClick}>Become a Contract Linguist</Link>
+            
+            {/* Request a Quote CTA - Handler added */}
             <Link 
               to="/contact" 
               className="cta-button"
+              onClick={handleNavClick}
             >
               Request a Quote
             </Link>
@@ -154,16 +200,25 @@ function Navbar() {
 /* -------------------- Footer -------------------- */
 
 function Footer() {
+  // Define a simple scroll-to-top handler for the footer links
+  const handleFooterClick = () => {
+      window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+      });
+  };
+
   return (
     <footer className="main-footer">
       <div className="footer-content">
         <p className="footer-title">United Translations Services Services LLC</p>
         <p className="footer-copy">© {new Date().getFullYear()} All rights reserved. | Your partner in global communication excellence.</p>
         <div className="footer-links-container">
-          <Link to="/" className="footer-link">Home</Link>
-          <Link to="/services" className="footer-link">Services</Link>
-          <Link to="/about" className="footer-link">About</Link>
-          <Link to="/contact" className="footer-link">Contact</Link>
+          {/* Handlers added to footer links for scroll-to-top consistency */}
+          <Link to="/" className="footer-link" onClick={handleFooterClick}>Home</Link>
+          <Link to="/services" className="footer-link" onClick={handleFooterClick}>Services</Link>
+          <Link to="/about" className="footer-link" onClick={handleFooterClick}>About</Link>
+          <Link to="/contact" className="footer-link" onClick={handleFooterClick}>Contact</Link>
         </div>
       </div>
     </footer>
@@ -173,6 +228,14 @@ function Footer() {
 /* -------------------- Home Page -------------------- */
 
 function Home() {
+  // Define a simple scroll-to-top handler for the CTA buttons
+  const handleCTAClick = () => {
+      window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+      });
+  };
+
   const services = [
     {
       icon: <FaHeadset className="service-icon" />,
@@ -218,10 +281,11 @@ function Home() {
             Quality Professional Interpretation Services for Every Need
           </h1>
           <div className="hero-cta-group">
-            <Link to="/contact" className="cta-button-primary">
+            {/* Handler added to Home CTA links */}
+            <Link to="/contact" className="cta-button-primary" onClick={handleCTAClick}>
               Request a Quote
             </Link>
-            <Link to="/contact" className="cta-button-secondary">
+            <Link to="/contact" className="cta-button-secondary" onClick={handleCTAClick}>
               Contact Us
             </Link>
           </div>
@@ -247,7 +311,8 @@ function Home() {
           ))}
         </motion.div>
          <div style={{ textAlign: 'center', marginTop: '40px' }}>
-            <Link to="/services" className="cta-button">View All Services</Link>
+            {/* Handler added to Home CTA link */}
+            <Link to="/services" className="cta-button" onClick={handleCTAClick}>View All Services</Link>
          </div>
       </section>
 
@@ -261,6 +326,7 @@ function Home() {
           <Link
             to="/contact"
             className="cta-banner-button"
+            onClick={handleCTAClick} // Handler added to CTA Banner link
           >
             Get Started Today
           </Link>

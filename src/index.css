@@ -799,24 +799,97 @@ a {
 /* ... (Existing support/contact/FAQ container styles remain above) ... */
 
 /* FAQ Accordion Fix */
+/* --- FAQ Section Styles --- */
+
+.faq-section {
+    /* Ensures padding around the FAQ content */
+    padding: 60px 20px;
+    background-color: #f9f9f9; /* Light background for contrast */
+}
+
+.faq-container {
+    /* Sets a maximum width for readability and centers the container */
+    max-width: 800px;
+    margin: 0 auto;
+    /* Adds a subtle gap between FAQ items */
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.faq-item {
+    /* Base style for each question block */
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden; /* Important for clean open/close transition */
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.faq-question {
+    /* The clickable button for the question */
+    width: 100%;
+    padding: 15px 20px;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 1.1em;
+    font-weight: 600;
+    color: #333333;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.faq-question:hover {
+    background-color: #f0f0f0;
+}
+
+/* Icon (FaQuestionCircle, etc.) styling if used in the button */
+.faq-icon {
+    color: #007bff; /* Primary color */
+    margin-right: 15px;
+    min-width: 20px;
+}
+
+/* Arrow Icon (FaChevronDown) styling */
+.faq-arrow {
+    margin-left: 20px;
+    font-size: 0.9em;
+    color: #666;
+    transition: transform 0.3s ease-in-out; /* Smooth rotation */
+}
+
+.faq-arrow.rotate {
+    /* Class applied when the state is 'isOpen' */
+    transform: rotate(180deg);
+    color: #007bff; /* Change color when open */
+}
+
+/* --- Answer Content Styles (CRITICAL for the animation) --- */
 .faq-answer {
+    /* Initially hidden via max-height: 0 */
     max-height: 0;
+    padding: 0 20px;
     overflow: hidden;
-    /* Ensure a duration is set for smooth movement */
-    transition: max-height 0.5s ease-in-out, padding 0.5s ease-in-out; 
-    background-color: #f9fafb;
-    border-radius: 0 0 4px 4px; /* Adjust border radius for flow */
-    margin-bottom: 0;
+    transition: max-height 0.4s ease-in-out, padding 0.4s ease-in-out;
 }
 
 .faq-answer.open {
-    /* Set max-height to a value GUARANTEED to cover the content, 
-       but the transition time dictates the visual speed. */
-    max-height: 500px; 
-    padding: 15px 25px 20px 55px; 
-    /* No margin-bottom is needed here if handled by the surrounding container */
-} /* --- Support Page Styles (FAQ & Contact) --- */
+    /* When 'open' class is applied, expand the height and add padding */
+    max-height: 500px; /* Needs to be larger than the content height */
+    padding: 10px 20px 20px 20px; /* Top/Bottom padding */
+}
 
+.faq-answer p {
+    /* Style for the text inside the answer */
+    font-size: 1em;
+    line-height: 1.5;
+    color: #555;
+    margin: 0; /* Remove default paragraph margin */
+}
 .page-header-support {
     background-color: #1f2937; /* Dark background */
     padding: 100px 24px;
@@ -1299,7 +1372,48 @@ a {
     .mobile-menu-toggle {
         display: block; 
     }
+    .page-header-support {
+        padding: 60px 20px; /* Reduced from 100px */
+        margin-bottom: 30px;
+    }
+
+    /* Header Text: Adjust for better fit on tablets/small screens */
+    .page-header-support .header-title {
+        font-size: 2.5em; /* Example: Reduce title size */
+    }
     
+    .page-header-support .header-subtitle {
+        font-size: 1.1em; /* Slight reduction for subtitle */
+    }
+
+    /* Section Padding: Reduce padding inside sections */
+    .section-padding {
+        padding: 40px 20px; 
+    }
+
+    /* Support Cards: The grid is already 1 column, but reduce card padding for less height */
+    .support-contact-grid {
+        gap: 20px; /* Slight reduction in gap */
+    }
+
+    .support-card {
+        padding: 30px 20px; /* Reduced from 40px 30px */
+    }
+
+    /* Support Card Text: Reduce font sizes */
+    .support-icon {
+        font-size: 36px; /* Reduced icon size from 44px */
+        margin-bottom: 15px;
+    }
+
+    .support-info {
+        font-size: 20px; /* Reduced info size from 24px */
+    }
+
+    /* FAQ Section Headings */
+    .section-heading {
+        font-size: 1.8em; /* Ensure headings aren't too large */
+    }
     /* ... rest of mobile styles ... */
 }
 @media (max-width: 767px) {

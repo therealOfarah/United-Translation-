@@ -98,9 +98,11 @@ export default function Contact() {
                     <div className="info-detail">
                         <FaPhone className="info-icon" />
                         <p className="info-text">
-                            <span className="info-label">Phone Support</span>
-                            (207)-376-7011
-                        </p>
+    <span className="info-label">Phone Support</span>
+    <a href="tel:+12073767011" className="phone-link">
+        (207)-376-7011
+    </a>
+</p>
                     </div>
 
                     <div className="info-detail">

@@ -23,10 +23,20 @@ const FAQItem = ({ question, answer }) => {
     const [isOpen, setIsOpen] = useState(false);
     return (
         <div className="faq-item">
-            <button className="faq-question" onClick={() => setIsOpen(!isOpen)}>
-                {/* ... */}
+            <button 
+                className="faq-question" 
+                onClick={() => setIsOpen(!isOpen)}
+                type="button" // Good practice for buttons inside divs
+            >
+                {/* Display the question */}
+                <span style={{ flexGrow: 1, textAlign: 'left' }}>{question}</span>
+                
+                {/* Toggle Icon - uses CSS class 'rotate' when 'open' */}
+                <FaChevronDown className={`faq-arrow ${isOpen ? 'open rotate' : ''}`} />
             </button>
+            
             {/* The class name below is what controls the style */}
+            {/* Using the 'open' class to reveal the answer content */}
             <div className={`faq-answer ${isOpen ? 'open' : ''}`}> 
                 <p>{answer}</p>
             </div>
@@ -55,7 +65,9 @@ export default function GetSupport() {
                     <div className="support-card phone">
                         <FaPhoneAlt className="support-icon" />
                         <h3 className="support-title">Call Us Now</h3>
-                        <p className="support-info">1.800.362.3241</p>
+                        <p className="support-info"><a href="tel:+12073767011" className="phone-link">
+        (207)-376-7011
+    </a></p>
                         <p className="support-desc">For urgent interpretation needs, available 24 hours a day.</p>
                     </div>
                     <a href="/contact" className="support-card email">
