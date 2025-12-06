@@ -30,9 +30,9 @@ export default function About() {
     ];
 
     const team = [
-        { name: 'Omar Farah', role: 'Founder & CEO', bio: 'Entrepreneur and interpreter dedicated to global communication.' },
-        { name: 'Ahmed Farah', role: 'Operations Director', bio: 'Manages interpreter training and quality assurance.' },
-        // { name: 'James Liu', role: 'Technical Lead', bio: 'Oversees digital systems and multilingual technology platforms.' },
+        { name: 'Omar Farah', role: 'Founder & CEO', bio: 'Leads strategic growth and global communication initiatives.' },
+        { name: 'Ahmed Farah', role: 'Principal Systems Architect', bio: 'Oversees digital systems and multilingual technology platforms.' },
+        { name: 'Khalil Ahmed', role: 'Operations Director', bio: 'Manages interpreter training and quality assurance.' },
     ];
 
     return (
@@ -82,7 +82,7 @@ export default function About() {
                         variants={containerVariants}
                         initial="hidden"
                         whileInView="visible"
-                         viewport={{ once: true, amount: 0.3 }}
+                        viewport={{ once: true, amount: 0.3 }}
                     >
                         {team.map((person, i) => (
                             <motion.div

@@ -179,7 +179,7 @@ function Navbar() {
 
             {/* Handlers added to standard nav links */}
             <Link to="/about" className="nav-link" onClick={handleNavClick}>Why Choose UTS</Link>
-            <Link to="/resources" className="nav-link" onClick={handleNavClick}>Resources</Link>
+            {/* <Link to="/resources" className="nav-link" onClick={handleNavClick}>Resources</Link> */}
             <Link to="/support" className="utility-link" onClick={handleNavClick}>Get Support</Link>
             <Link to="/become-linguist" className="utility-link" onClick={handleNavClick}>Become a Contract Linguist</Link>
             
