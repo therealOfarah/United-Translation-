@@ -31,7 +31,7 @@ export default function About() {
 
     const team = [
         { name: 'Omar Farah', role: 'Founder & CEO', bio: 'Leads strategic growth and global communication initiatives.' },
-        { name: 'Ahmed Farah', role: 'Principal Systems Architect', bio: 'Oversees digital systems and multilingual technology platforms.' },
+        { name: 'Ahmed Farah', role: 'Cheif Technology Officer', bio: 'Oversees digital systems and multilingual technology platforms.' },
         { name: 'Khalil Ahmed', role: 'Operations Director', bio: 'Manages interpreter training and quality assurance.' },
     ];
 
