@@ -14,6 +14,7 @@ import BecomeLinguist from './BecomeLinguist';
 import Industries from './Industries';
 import Resources from './Resources';
 import GetSupport from './GetSupport';
+import Pledges from './Pledges';
 // --- Framer Motion Variants (Defined locally) ---
 // --- Framer Motion Variants (Defined locally) ---
 const containerVariants = {
@@ -218,6 +219,7 @@ function Footer() {
           <Link to="/" className="footer-link" onClick={handleFooterClick}>Home</Link>
           <Link to="/services" className="footer-link" onClick={handleFooterClick}>Services</Link>
           <Link to="/about" className="footer-link" onClick={handleFooterClick}>About</Link>
+          <Link to="/pledges" className="footer-link">Our Commitments</Link>
           <Link to="/contact" className="footer-link" onClick={handleFooterClick}>Contact</Link>
         </div>
       </div>
@@ -361,7 +363,8 @@ export default function App() {
         <Route path="/interpretation" element={<Interpretation />} />
         <Route path="/translation" element={<Translation />} />
         <Route path="/localization" element={<Localization />} />
-        
+        <Route path="/pledges" element={<Pledges />} />
+
         {/* Core Nav Routes */}
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
@@ -371,7 +374,7 @@ export default function App() {
         <Route path="/resources" element={<Resources />} /> 
         <Route path="/support" element={<GetSupport />} />
         <Route path="/become-linguist" element={<BecomeLinguist />} />
-
+        {/* <Link to="/pledges" className="footer-link">Our Commitments</Link> */}
       </Routes>
       <Footer />
     </Router>

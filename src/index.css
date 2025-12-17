@@ -1124,7 +1124,98 @@ a {
     margin-bottom: 50px;
     border-radius: 12px;
 }
+/* Pledges Page Layout */
+.pledges-container {
+  max-width: 1100px;
+  margin: 4rem auto;
+  padding: 0 2rem;
+  text-align: left; /* Better readability than center for long text */
+}
 
+.pledges-header {
+  margin-bottom: 4rem;
+  border-left: 5px solid #646cff; /* Brand accent color */
+  padding-left: 1.5rem;
+}
+
+.pledges-header h1 {
+  font-size: 2.8rem;
+  margin-bottom: 1rem;
+  color: #213547;
+}
+
+.lead-text {
+  font-size: 1.25rem;
+  color: #555;
+  max-width: 700px;
+}
+
+/* The Grid */
+.pledges-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2.5rem;
+}
+
+.pledge-card {
+  background: #ffffff;
+  padding: 2.5rem;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+  border: 1px solid #f0f0f0;
+  transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.pledge-card:hover {
+  transform: translateY(-5px);
+}
+
+.icon-wrapper {
+  color: #646cff;
+  margin-bottom: 1.5rem;
+}
+
+.pledge-card h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #1a1a1a;
+}
+
+.pledge-list {
+  margin: 1.5rem 0;
+  padding-left: 1.2rem;
+  flex-grow: 1;
+}
+
+.pledge-list li {
+  margin-bottom: 0.8rem;
+  color: #444;
+}
+
+.pledge-footer {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #eee;
+  font-size: 0.9rem;
+}
+
+.pledge-footer .links a {
+  margin-right: 1rem;
+  color: #646cff;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.pledge-footer .links a:hover {
+  text-decoration: underline;
+}
+
+.italic {
+  font-style: italic;
+  color: #777;
+}
 .application-form-wrapper {
     display: grid;
     grid-template-columns: 1fr;
